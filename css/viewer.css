@@ -1,0 +1,27 @@
+.pdf-viewer-controls {
+	position: relative;
+	padding-bottom: 5px;
+	width: 100%;
+	max-width: 100%;
+}
+
+.pdf-viewer-controls #pdf-viewer-previous {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.pdf-viewer-controls .pdf-viewer-page-counter {
+	text-align: center;
+}
+
+.pdf-viewer-controls #pdf-viewer-next {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+#pdf-viewer-canvas {
+	width: 100%;
+	max-width: 100%;
+}

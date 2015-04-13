@@ -1,0 +1,20 @@
+{
+    "name": "elefant/app-pdf",
+    "type": "elefant-app",
+    "description": "Embedded PDF viewer for the Elefant CMS",
+    "keywords": ["pdf", "viewer", "PDF.js", "elefant", "cms", "app"],
+    "license": "Apache",
+	"authors": [
+		{
+			"name": "Johnny Broadway",
+			"email": "johnny@johnnybroadway.com",
+			"homepage": "http://www.johnnybroadway.com/"
+		}
+	],
+    "repositories": [
+        {"type": "git", "url": "http://github.com/jbroadway/elefant_installer"}
+    ],
+    "require": {
+        "elefant/app-installer": "*"
+    }
+}

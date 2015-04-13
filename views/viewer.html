@@ -1,0 +1,77 @@
+<script>
+$(function () {
+	var pdf_doc = null,
+		pdf_rendering = false,
+		pdf_page_num = 1;
+	
+	function pdf_viewer_render_page (num) {
+		pdf_doc.getPage (num).then (function (page) {
+			document.getElementById ('pdf-viewer-page-num').textContent = num;
+
+			var scale = 1.0;
+			var viewport = page.getViewport (scale);
+			
+			var canvas = document.getElementById ('pdf-viewer-canvas');
+			var context = canvas.getContext ('2d');
+			canvas.height = viewport.height;
+			canvas.width = viewport.width;
+			
+			var renderContext = {
+				canvasContext: context,
+				viewport: viewport
+			};
+			
+			page.render (renderContext);
+		});	
+	}
+	
+	function pdf_viewer_queue (num) {
+		if (pdf_rendering) {
+			pdf_page_num = num;
+		} else {
+			pdf_viewer_render_page (num);
+		}
+	}
+	
+	function pdf_viewer_previous () {
+		if (pdf_page_num <= 1) {
+			return;
+		}
+		pdf_page_num--;
+		pdf_viewer_queue (pdf_page_num);
+	}
+	
+	function pdf_viewer_next () {
+		if (pdf_page_num >= pdf_doc.numPages) {
+			return;
+		}
+		pdf_page_num++;
+		pdf_viewer_queue (pdf_page_num);
+	}
+
+	PDFJS.workerSrc = '/apps/pdf/js/build/pdf.worker.js';
+	PDFJS.getDocument ('{{file}}').then (function (pdf) {
+		pdf_doc = pdf;
+
+		document.getElementById ('pdf-viewer-page-count').textContent = pdf_doc.numPages;
+		document.getElementById ('pdf-viewer-previous').addEventListener ('click', pdf_viewer_previous);
+		document.getElementById ('pdf-viewer-next').addEventListener ('click', pdf_viewer_next);
+
+		pdf_viewer_queue (pdf_page_num);
+	});
+});
+</script>
+
+<div class="pdf-viewer">
+	<div class="pdf-viewer-controls">
+		<button id="pdf-viewer-previous">{"Previous"}</button>
+		<div class="pdf-viewer-page-counter">
+			{"Page"}: <span id="pdf-viewer-page-num"></span> / <span id="pdf-viewer-page-count"></span>
+		</div>
+		<button id="pdf-viewer-next">{"Next"}</button>
+	</div>
+	<canvas id="pdf-viewer-canvas"></canvas>
+	<p class="pdf-viewer-external-link">
+		<a href="/apps/pdf/js/web/viewer.html?file={{file|urlencode}}" target="_blank">{"Open PDF in a new window"}</a>
+	</p>
+</div>
