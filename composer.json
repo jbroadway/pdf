@@ -1,7 +1,7 @@
 {
     "name": "elefant/app-pdf",
     "type": "elefant-app",
-    "description": "Embedded PDF viewer for the Elefant CMS",
+    "description": "Embedded PDF viewer for the Elefant CMS, based on PDF.js",
     "keywords": ["pdf", "viewer", "PDF.js", "elefant", "cms", "app"],
     "license": "Apache",
 	"authors": [
